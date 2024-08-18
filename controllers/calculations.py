@@ -34,7 +34,7 @@ def attackValue(value, scoreInfo):
     
 def getRoboName(name):
     try:
-        api_key = "gX7R92otwRyoBiaSoQVKw71WSrb3i08z"
+        api_key = "NOTHER API"
         model = "mistral-large-latest"
 
         client = Mistral(api_key=api_key)

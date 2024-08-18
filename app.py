@@ -83,7 +83,7 @@ def getScores():
 def recieve_data():
     ANSWER = request.form['answer']
 
-    api_key = "gX7R92otwRyoBiaSoQVKw71WSrb3i08z"
+    api_key = "OUR API KEY"
     model = "mistral-large-latest"
 
     client = Mistral(api_key=api_key)
