@@ -183,4 +183,4 @@ def status():
     return jsonify({"success": True, "name": roboname}), 200
 
 if __name__ == '__main__':  
-    socketio.run(app, debug=True, port=3001, host="192.168.2.220")
+    socketio.run(app, debug=True, port=3001, host="MY IP ADDRRESS")
