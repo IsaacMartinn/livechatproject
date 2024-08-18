@@ -1,57 +1,72 @@
-.content{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
+*{
+    padding: 0;
+    margin: 0;
 }
 
 
-.buttons{
-    display: flex;
-    flex-direction:column;
-    align-items: center;
-    justify-content: center;
-    gap : 10px;
+
+.first-column{
+    background-color:#313131;
+    border-radius: 25px;
+
+    width: 200px;
+    margin-right: 10px;
+    padding:20px;
+    height:1120px;
 }
 
-.join{
-    display:flex;
-    flex-direction: row;
-    width: 100%;
+.second-column{
+    background-color:#313131;
+    border-radius: 25px;
+    padding: 20px;
+    padding: 20px;
+    width: 200px;
+    height: 1120px;
 }
 
-.create-btn{
-    width:100%;
+.top-left-navbar{
+    text-align:left;
+    background-color: red;
 }
 
-.message-box{
-    border-color:black;
-    border-width:2px;
-    border-style: solid;
-    border-radius: 10px;
-    background-color: whitesmoke;
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    width: 80vw;
-    align-items: stretch;
+body{
+    background-color:purple;
 }
 
-.message{
-    overflow-y: scroll;
-    flex: 1;
-    width: 100%;
+.example{
+  background-color:#1E201E;
+  border-radius: 25px;
+  padding: 20px;
+  width: 550px;
+  height: 150px;
+  margin: auto;
+
+
+  padding: 10px;
 }
 
-.input{
-    padding: 10px;
-    display: flex;
+.words{
+    color:white;
 
 }
-h2{
-    text-align: center;
+
+.difficulty{
+    color:orange;
+
 }
 
-#message{
-    flex: 1;
+header{
+
+    background-color:#525252;
+}
+
+#textbox{
+    height:100000000;
+    font-size:14pt;
+}
+
+#btn{
+    background-color:green;
+    margin-left: auto;
+    margin-right:0;
 }
