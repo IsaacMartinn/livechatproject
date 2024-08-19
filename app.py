@@ -83,7 +83,7 @@ def getScores():
 def recieve_data():
     ANSWER = request.form['answer']
 
-    api_key = "OUR API KEY"
+    api_key = "gX7R92otwRyoBiaSoQVKw71WSrb3i08z"
     model = "mistral-large-latest"
 
     client = Mistral(api_key=api_key)
@@ -183,4 +183,4 @@ def status():
     return jsonify({"success": True, "name": roboname}), 200
 
 if __name__ == '__main__':  
-    socketio.run(app, debug=True, port=3001, host="MY IP ADDRRESS")
+    socketio.run(app, debug=True, port=3001, host="10.16.146.160")
