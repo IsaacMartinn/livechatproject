@@ -1,6 +1,7 @@
 import random
 from mistralai import Mistral
 import math
+import os
 
 # gonna need to add leetcode param to determind attacks
 def attackValue(value, scoreInfo):
@@ -34,7 +35,7 @@ def attackValue(value, scoreInfo):
     
 def getRoboName(name):
     try:
-        api_key = "gX7R92otwRyoBiaSoQVKw71WSrb3i08z"
+        api_key = os.environ.get("MISTRAL_API")
         model = "mistral-large-latest"
 
         client = Mistral(api_key=api_key)
