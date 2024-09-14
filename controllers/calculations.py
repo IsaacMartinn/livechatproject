@@ -34,6 +34,7 @@ def attackValue(value, scoreInfo):
     
 def getRoboName(name):
     try:
+        raise RuntimeError()
         api_key = os.environ.get("MISTRAL_API")
         model = "mistral-large-latest"
 

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template,url_for,redirect
+from flask import Flask, request, jsonify, render_template,url_for,redirect,request
 from flask_socketio import SocketIO, join_room, emit
 from flask_cors import CORS
 from controllers.calculations import attackValue, getRoboName, toAdd
@@ -6,6 +6,8 @@ from mistralai import Mistral
 import requests
 import random
 import os
+
+
 
 
 
@@ -49,20 +51,26 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 @app.route("/")
 def home():
     try:
+        submitted_question = False
         name = request.args.get("name")
         response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/{name}")
         response.raise_for_status()
 
         data = response.json()
         picture = data['avatar']
+        if request.method =='POST':
+            submitted_question = True
 
-        return render_template("index.html",question =question,num=random_int,profile_pic = picture)
+            return render_template("index.html",question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question )
+        else:
+            return render_template("index.html",question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question)
+
     except Exception as e:
         print(str(e))
         return render_template("index.html",question =question,num=random_int,profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
 
 
-@app.route("/gettheScores", methods=["POST"])
+@app.route("/gettheScores", methods=['GET',"POST"])
 def getScores():
     try:
         data = request.get_json("name")
@@ -80,6 +88,7 @@ def getScores():
         return jsonify({
             "data": data
         })
+
     except Exception as e:
         print(str(e))
         data = {
@@ -111,13 +120,32 @@ def recieve_data():
     )
     response_text = chat_response.choices[0].message.content
 
-    formatted_text = response_text.replace("\n", "<br>")
+    formatted_text = response_text.replace("\n", "   ")
+    name = request.args.get("name")
+    response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/{name}")
+    response.raise_for_status()
+    data = response.json()
+    picture = data['avatar']
+    submitted_question = True
+    answer_yes_or_no = formatted_text.split()[0]
 
-    return f"""
-    <h1>Answer</h1>
-    <p>{formatted_text}</p>
-    <a href="http://localhost:5173/boost">GET BOOST</a>
-    """
+    return render_template("index.html",
+                           question =question,
+                           num=random_int,
+                           profile_pic = picture,
+                           submitted_question=submitted_question,
+                           answer=formatted_text,
+                           answer_yes_or_no=answer_yes_or_no
+                           )
+
+
+
+
+    # return f"""
+    # <h1>Answer</h1>
+    # <p>{formatted_text}</p>
+    # <a href="http://localhost:5173/boost">GET BOOST</a>
+    # """
 
 
 
@@ -195,4 +223,4 @@ def status():
     return jsonify({"success": True, "name": roboname}), 200
 
 if __name__ == '__main__':  
-    socketio.run(app, debug=True, port=3000, host="localhost")
+    socketio.run(app, debug=True, port=3000, host="localhost", allow_unsafe_werkzeug=True)
