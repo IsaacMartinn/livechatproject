@@ -48,15 +48,19 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 
 @app.route("/")
 def home():
-    name = request.args.get("name")
-    print(name)
-    response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/{name}")
-    response.raise_for_status()
+    try:
+        name = request.args.get("name")
+        response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/{name}")
+        response.raise_for_status()
 
-    data = response.json()
-    picture = data['avatar']
+        data = response.json()
+        picture = data['avatar']
 
-    return render_template("index.html",question =question,num=random_int,profile_pic = picture)
+        return render_template("index.html",question =question,num=random_int,profile_pic = picture)
+    except Exception as e:
+        print(str(e))
+        return render_template("index.html",question =question,num=random_int,profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
+
 
 @app.route("/gettheScores", methods=["POST"])
 def getScores():
@@ -72,12 +76,20 @@ def getScores():
         total_submission = data['totalSubmissions'][0]['submissions']
         ranking = data['ranking']
         data = toAdd(count, total_submission, ranking)
-
+        print(data)
         return jsonify({
             "data": data
         })
     except Exception as e:
-        str(e)
+        print(str(e))
+        data = {
+            "perc": 0,
+            "solved": 0,
+            "ranking": 0
+        }
+        return jsonify({
+            "data": data
+        })
 
 @app.route("/backtolobby",methods=["POST"])
 def recieve_data():

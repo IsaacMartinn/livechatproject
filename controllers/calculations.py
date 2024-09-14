@@ -5,7 +5,6 @@ import os
 
 # gonna need to add leetcode param to determind attacks
 def attackValue(value, scoreInfo):
-
     perc = (random.randint(0, 100))
     toreturn = 0
     if(value == "Punch"):
@@ -53,7 +52,8 @@ def getRoboName(name):
         words = content.split()
         last_word = words[-1] if words else ''
         return(last_word)
-    except:
+    except Exception as e:
+        print(str(e))
         return(name + "botty")
     
 def toAdd(solved, submissions, ranking):
@@ -90,4 +90,3 @@ def toAdd(solved, submissions, ranking):
         "solved": solved,
         "ranking": ranking
     })
-    
