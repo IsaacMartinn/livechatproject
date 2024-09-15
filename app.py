@@ -77,7 +77,9 @@ def getScores():
         name = data["name"]
         print(name)
         response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/userProfile/{name}")
+        print("fo")
         print(response)
+        print("af")
         response.raise_for_status()
         data = response.json()
         print(data)
