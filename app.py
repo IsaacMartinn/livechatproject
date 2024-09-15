@@ -75,16 +75,15 @@ def getScores():
     try:
         data = request.get_json("name")
         name = data["name"]
-
+        print(name)
         response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/userProfile/{name}")
         response.raise_for_status()
-
         data = response.json()
+        print(data)
         count = data['totalSolved']
         total_submission = data['totalSubmissions'][0]['submissions']
         ranking = data['ranking']
         data = toAdd(count, total_submission, ranking)
-        print(data)
         return jsonify({
             "data": data
         })
