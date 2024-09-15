@@ -58,6 +58,7 @@ def getRoboName(name):
         return(name + "botty")
     
 def toAdd(solved, submissions, ranking):
+    print("solved")
     perc = solved/submissions
     if(perc > 0.5):
         perc = 6
@@ -85,6 +86,8 @@ def toAdd(solved, submissions, ranking):
         ranking = 4
     else:
         ranking = 6
+    print(perc)
+    print(solved)
 
     return({
         "perc": perc,
