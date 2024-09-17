@@ -43,6 +43,7 @@ random_int = random.randint(0,3)
 question = leetcode_questions[random_int]
 
 app = Flask(__name__)
+CORS(app)
 socketio = SocketIO(app, cors_allowed_origins='*')
 
 
@@ -217,5 +218,4 @@ def status():
     roboname = getRoboName(name)
     return jsonify({"success": True, "name": roboname}), 200
 
-if __name__ == '__main__':  
-    socketio.run(app, debug=True, port=8000, host='0.0.0.0')
+socketio.run(app, debug=True, port=8000, host='0.0.0.0')
