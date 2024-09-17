@@ -75,14 +75,9 @@ def getScores():
     try:
         data = request.get_json("name")
         name = data["name"]
-        print(name)
         response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/userProfile/{name}")
-        print("fo")
-        print(response)
-        print("af")
         response.raise_for_status()
         data = response.json()
-        print(data)
         count = data['totalSolved']
         total_submission = data['totalSubmissions'][0]['submissions']
         ranking = data['ranking']
@@ -100,7 +95,7 @@ def getScores():
         }
         return jsonify({
             "data": data
-        })
+        })  
 
 @app.route("/backtolobby",methods=["POST"])
 def recieve_data():
