@@ -6,7 +6,6 @@ from mistralai import Mistral
 import requests
 import random
 import os
-# import 
 
 
 leetcode_questions = [{
@@ -72,6 +71,7 @@ def home():
 @app.route("/gettheScores", methods=['GET',"POST"])
 def getScores():
     try:
+        print("Scores begun")
         data = request.get_json("name")
         name = data["name"]
         response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/userProfile/{name}")
@@ -80,7 +80,9 @@ def getScores():
         count = data['totalSolved']
         total_submission = data['totalSubmissions'][0]['submissions']
         ranking = data['ranking']
+        print("Scores found")
         data = toAdd(count, total_submission, ranking)
+        print(data)
         return jsonify({
             "data": data
         })
