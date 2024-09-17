@@ -6,9 +6,7 @@ from mistralai import Mistral
 import requests
 import random
 import os
-
-
-
+# import 
 
 
 leetcode_questions = [{
@@ -45,7 +43,8 @@ random_int = random.randint(0,3)
 question = leetcode_questions[random_int]
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, cors_allowed_origins='*')
+
 
 @app.route("/")
 def home():
