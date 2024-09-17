@@ -74,12 +74,15 @@ def getScores():
         print("Scores begun")
         data = request.get_json("name")
         name = data["name"]
-        response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/userProfile/{name}")
+        # response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/userProfile/{name}")
+        response = requests.post(url="https://leetcode.com/graphql?submitStats=submitStatsGlobal", json={
+            "query":'{ matchedUser(username: \"' + name + '\") { username profile { realName aboutMe userAvatar ranking starRating globalRanking reputation } submitStats: submitStatsGlobal { acSubmissionNum { difficulty count submissions } totalSubmissionNum { difficulty count submissions } } badges { name displayName icon } contributions { points questionCount testcaseCount } languageProblemCount { languageName problemsSolved } } }'
+        })
         response.raise_for_status()
         data = response.json()
-        count = data['totalSolved']
-        total_submission = data['totalSubmissions'][0]['submissions']
-        ranking = data['ranking']
+        count = data["data"]["matchedUser"]["submitStats"]["acSubmissionNum"][0]["count"]
+        total_submission = data["data"]["matchedUser"]["submitStats"]["acSubmissionNum"][0]["submissions"]
+        ranking = data['data']["matchedUser"]["profile"]["ranking"]
         print("Scores found")
         data = toAdd(count, total_submission, ranking)
         print(data)
