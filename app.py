@@ -92,7 +92,8 @@ def getScores():
         data = {
             "perc": 0,
             "solved": 0,
-            "ranking": 0
+            "ranking": 0,
+            "exc": str(e)
         }
         return jsonify({
             "data": data
