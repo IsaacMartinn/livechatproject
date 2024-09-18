@@ -198,8 +198,14 @@ def disconnect():
     player2 = None
 
 @socketio.on("gameOver")
-def gameOver():
-    emit("winner", broadcast=True)
+def gameOver(data):
+    global player1, player2
+    loser = data["id"]
+    if(loser == player1):
+        winner = player2
+    else:
+        winner = player1
+    emit("winner", to=winner)
 
 @socketio.on("sendOppInfo")
 def sendOppInfo(data):
