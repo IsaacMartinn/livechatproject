@@ -202,10 +202,10 @@ def gameOver(data):
     global player1, player2
     loser = data["id"]
     if(loser == player1):
-        winner = player2
+        winner = "Player 2 WINS"
     else:
-        winner = player1
-    emit("winner", to=winner)
+        winner = "Player 1 WINS"
+    emit("winner", {'data': winner})
 
 @socketio.on("sendOppInfo")
 def sendOppInfo(data):
