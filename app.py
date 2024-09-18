@@ -205,7 +205,6 @@ def gameOver(data):
     else:
         winner = player1
     emit("winner", to=winner)
-    emit("loser", to=data["data"])
 
 @socketio.on("sendOppInfo")
 def sendOppInfo(data):
