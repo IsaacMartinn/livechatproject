@@ -199,7 +199,7 @@ def disconnect():
 
 @socketio.on("gameOver")
 def gameOver(data):
-    emit("winner", {'data': f"{data['name']} WINS"})
+    emit("winner", {'data': f"{data['name']} WINS"}, broadcast=True)
 
 @socketio.on("sendOppInfo")
 def sendOppInfo(data):
