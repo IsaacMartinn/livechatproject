@@ -51,11 +51,14 @@ def home():
     try:
         submitted_question = False
         name = request.args.get("name")
-        response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/{name}")
+        response = requests.post(url="https://leetcode.com/graphql?submitStats=submitStatsGlobal", json={
+            "query":'{ matchedUser(username: \"' + name + '\") { username profile { realName aboutMe userAvatar ranking starRating globalRanking reputation } submitStats: submitStatsGlobal { acSubmissionNum { difficulty count submissions } totalSubmissionNum { difficulty count submissions } } badges { name displayName icon } contributions { points questionCount testcaseCount } languageProblemCount { languageName problemsSolved } } }'
+        })
         response.raise_for_status()
 
         data = response.json()
-        picture = data['avatar']
+        picture = data["data"]["matchedUser"]["profile"]["userAvatar"]
+
         if request.method =='POST':
             submitted_question = True
 
@@ -74,7 +77,6 @@ def getScores():
         print("Scores begun")
         data = request.get_json("name")
         name = data["name"]
-        # response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/userProfile/{name}")
         response = requests.post(url="https://leetcode.com/graphql?submitStats=submitStatsGlobal", json={
             "query":'{ matchedUser(username: \"' + name + '\") { username profile { realName aboutMe userAvatar ranking starRating globalRanking reputation } submitStats: submitStatsGlobal { acSubmissionNum { difficulty count submissions } totalSubmissionNum { difficulty count submissions } } badges { name displayName icon } contributions { points questionCount testcaseCount } languageProblemCount { languageName problemsSolved } } }'
         })
@@ -124,10 +126,12 @@ def recieve_data():
 
     formatted_text = response_text.replace("\n", "   ")
     name = request.args.get("name")
-    response = requests.get(url=f"https://alfa-leetcode-api.onrender.com/{name}")
+    response = requests.post(url="https://leetcode.com/graphql?submitStats=submitStatsGlobal", json={
+            "query":'{ matchedUser(username: \"' + name + '\") { username profile { realName aboutMe userAvatar ranking starRating globalRanking reputation } submitStats: submitStatsGlobal { acSubmissionNum { difficulty count submissions } totalSubmissionNum { difficulty count submissions } } badges { name displayName icon } contributions { points questionCount testcaseCount } languageProblemCount { languageName problemsSolved } } }'
+        })
     response.raise_for_status()
     data = response.json()
-    picture = data['avatar']
+    picture = data["data"]["matchedUser"]["profile"]["userAvatar"]
     submitted_question = True
     answer_yes_or_no = formatted_text.split()[0]
 
