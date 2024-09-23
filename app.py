@@ -62,13 +62,13 @@ def home():
         if request.method =='POST':
             submitted_question = True
 
-            return render_template("index.html",userName=name, question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question )
+            return render_template("index.html", question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question )
         else:
-            return render_template("index.html",userName="", question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question)
+            return render_template("index.html",question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question)
 
     except Exception as e:
         print(str(e))
-        return render_template("index.html",userName="", question =question,num=random_int,profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
+        return render_template("index.html",question =question,num=random_int,profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
 
 
 @app.route("/gettheScores", methods=['GET',"POST"])
@@ -125,21 +125,13 @@ def recieve_data():
     response_text = chat_response.choices[0].message.content
 
     formatted_text = response_text.replace("\n", "   ")
-    # name = request.args.get("name")
-    name = request.form["username"]
-    response = requests.post(url="https://leetcode.com/graphql?submitStats=submitStatsGlobal", json={
-            "query":'{ matchedUser(username: \"' + name + '\") { username profile { realName aboutMe userAvatar ranking starRating globalRanking reputation } submitStats: submitStatsGlobal { acSubmissionNum { difficulty count submissions } totalSubmissionNum { difficulty count submissions } } badges { name displayName icon } contributions { points questionCount testcaseCount } languageProblemCount { languageName problemsSolved } } }'
-        })
-    response.raise_for_status()
-    data = response.json()
-    picture = data["data"]["matchedUser"]["profile"]["userAvatar"]
     submitted_question = True
     answer_yes_or_no = formatted_text.split()[0]
 
     return render_template("index.html",
                            question =question,
                            num=random_int,
-                           profile_pic = picture,
+                           profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
                            submitted_question=submitted_question,
                            answer=formatted_text,
                            answer_yes_or_no=answer_yes_or_no
