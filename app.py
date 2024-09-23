@@ -62,13 +62,13 @@ def home():
         if request.method =='POST':
             submitted_question = True
 
-            return render_template("index.html",question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question )
+            return render_template("index.html",userName=name, question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question )
         else:
-            return render_template("index.html",question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question)
+            return render_template("index.html",userName="", question =question,num=random_int,profile_pic = picture,submitted_question=submitted_question)
 
     except Exception as e:
         print(str(e))
-        return render_template("index.html",question =question,num=random_int,profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
+        return render_template("index.html",userName="", question =question,num=random_int,profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png")
 
 
 @app.route("/gettheScores", methods=['GET',"POST"])
@@ -107,7 +107,7 @@ def getScores():
 @app.route("/backtolobby",methods=["POST"])
 def recieve_data():
     ANSWER = request.form['answer']
-
+    
     api_key = os.environ.get("MISTRAL_API")
     model = "mistral-large-latest"
 
@@ -125,7 +125,8 @@ def recieve_data():
     response_text = chat_response.choices[0].message.content
 
     formatted_text = response_text.replace("\n", "   ")
-    name = request.args.get("name")
+    # name = request.args.get("name")
+    name = request.form["username"]
     response = requests.post(url="https://leetcode.com/graphql?submitStats=submitStatsGlobal", json={
             "query":'{ matchedUser(username: \"' + name + '\") { username profile { realName aboutMe userAvatar ranking starRating globalRanking reputation } submitStats: submitStatsGlobal { acSubmissionNum { difficulty count submissions } totalSubmissionNum { difficulty count submissions } } badges { name displayName icon } contributions { points questionCount testcaseCount } languageProblemCount { languageName problemsSolved } } }'
         })
