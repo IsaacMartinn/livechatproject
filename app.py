@@ -108,35 +108,43 @@ def getScores():
 def recieve_data():
     ANSWER = request.form['answer']
     
-    api_key = os.environ.get("MISTRAL_API")
-    model = "mistral-large-latest"
+    # api_key = os.environ.get("MISTRAL_API")
+    # model = "mistral-large-latest"
 
-    client = Mistral(api_key=api_key)
+    # client = Mistral(api_key=api_key)
 
-    chat_response = client.chat.complete(
-        model=model,
-        messages=[
-            {
-                "role": "user",
-                "content": f"First tell me if i got the answer right with a yes or no then given the leetcode question titled,{question['title']}, and the question {question['description']} is this the right answer for the question? Answer: {ANSWER}. GIVE ME THE RIGHT ANSWER"
-            },
-        ]
-    )
-    response_text = chat_response.choices[0].message.content
+    # chat_response = client.chat.complete(
+    #     model=model,
+    #     messages=[
+    #         {
+    #             "role": "user",
+    #             "content": f"First tell me if i got the answer right with a yes or no then given the leetcode question titled,{question['title']}, and the question {question['description']} is this the right answer for the question? Answer: {ANSWER}. GIVE ME THE RIGHT ANSWER"
+    #         },
+    #     ]
+    # )
+    # response_text = chat_response.choices[0].message.content
 
-    formatted_text = response_text.replace("\n", "   ")
-    submitted_question = True
-    answer_yes_or_no = formatted_text.split()[0]
+    # formatted_text = response_text.replace("\n", "   ")
+    # submitted_question = True
+    # answer_yes_or_no = formatted_text.split()[0]
 
+    # STOPPED PAYING FOR AI STUFF
+    # return render_template("index.html",
+    #                        question =question,
+    #                        num=random_int,
+    #                        profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    #                        submitted_question=submitted_question,
+    #                        answer=formatted_text,
+    #                        answer_yes_or_no=answer_yes_or_no
+    #                        )
     return render_template("index.html",
-                           question =question,
-                           num=random_int,
-                           profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-                           submitted_question=submitted_question,
-                           answer=formatted_text,
-                           answer_yes_or_no=answer_yes_or_no
-                           )
-
+                            question =question,
+                            num=random_int,
+                            profile_pic = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+                            submitted_question=True,
+                            answer="Whoops, sorry about that. I stopped paying for the AI model. Looks like you get the boost anyways!",
+                            answer_yes_or_no="Yes"
+                            )
 
 
 
